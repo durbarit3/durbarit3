@@ -30,6 +30,18 @@
         </div>
     </div>
 
+
+<div class="container product-detail">
+    <div class="row">
+
+       @include('frontend.products.sidenav')
+
+        <div id="content" class="col-md-9 col-sm-12 col-xs-12">
+            <div class="module banners-effect-9 form-group">
+                <div class="banners">
+                    <div>
+                        <a href="#"><img src="{{asset('public/frontend/')}}/image/catalog/demo/category/men-cat.jpg"></a>
+
     <div class="container product-detail">
         <div class="row">
             <aside class="col-md-3 col-sm-4 col-xs-12 content-aside left_column sidebar-offcanvas">
@@ -451,6 +463,7 @@
                             <a href="#"><img
                                     src="{{asset('public/frontend/')}}/image/catalog/demo/category/men-cat.jpg"></a>
                         </div>
+
                     </div>
                 </div>
                 <a href="javascript:void(0)" class="open-sidebar hidden-lg hidden-md"><i
@@ -633,6 +646,18 @@
 @endsection
 @push('js')
 <script>
+
+    $(document).ready(function(){
+      $("#so-filter-heading").click(function(){
+            alert('succes');
+      });
+});
+
+
+</script>
+
+@endsection
+
     $(document).ready(function () {
         $(".fa-chevron-down").on('click', function () {
             $('.so-filter-content-opts').toggle();
@@ -670,3 +695,4 @@
     });
 </script>
 @endpush
+

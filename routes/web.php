@@ -205,17 +205,17 @@ Route::post('admin/banner/update','Admin\BannerController@update')->name('admin.
 // site banner
 Route::get(md5('admin/sitebanner/all'),'Admin\SiteBannerController@sitebanner')->name('admin.sitebanner.all');
 
-Route::get('admin/sitebanner/deactive/{id}','Admin\BannerController@sitebannerdeactive');
-Route::get('admin/sitebanner/active/{id}','Admin\BannerController@sitebanneractive');
-Route::get('admin/sitebanner/softdelete/{id}','Admin\BannerController@sitebabnsoftdelete');
+Route::get('admin/sitebanner/deactive/{id}','Admin\SiteBannerController@sitebannerdeactive');
+Route::get('admin/sitebanner/active/{id}','Admin\SiteBannerController@sitebanneractive');
+Route::get('admin/sitebanner/softdelete/{id}','Admin\SiteBannerController@sitebabnsoftdelete');
 Route::get('/get/admin/sitebanner/edit/{id}','Admin\BannerController@sitebabnsoftedit');
-Route::get('admin/sitebanner/restore/{id}','Admin\BannerController@sitebanrestore');
-Route::get('admin/sitebanner/hearddelete/{id}','Admin\BannerController@sitebahearddel');
+Route::get('admin/sitebanner/restore/{id}','Admin\SiteBannerController@sitebanrestore');
+Route::get('admin/sitebanner/hearddelete/{id}','Admin\SiteBannerController@sitebahearddel');
 
 Route::post(md5('admin/sitebanner/insert'),'Admin\SiteBannerController@sitebannerinsert')->name('admin.sitebanner.insert');
 
 Route::post(md5('admin/sitebanner/update'),'Admin\BannerController@sitebannerupdate')->name('admin.sitebanner.update');
-Route::post(md5('admin/sitebanner/multisoftdelete'),'Admin\BannerController@sitebanmultisoft')->name('admin.sitebanner.multisoftdelete');
+Route::post(md5('admin/sitebanner/multisoftdelete'),'Admin\SiteBannerController@sitebanmultisoft')->name('admin.sitebanner.multisoftdelete');
 
 
 
@@ -239,6 +239,9 @@ Route::post(md5('admin/trash/product/hearddelete'), 'Admin\TrashController@produ
 
 Route::get(md5('admin/trash/banner'), 'Admin\TrashController@banner')->name('admin.trash.banner');
 Route::post(md5('admin/trash/banmultidel'), 'Admin\TrashController@banmultidel')->name('admin.trash.multidelban');
+
+Route::get(md5('admin/trash/sitebanner'), 'Admin\TrashController@SiteBanner')->name('admin.trash.sitebanner');
+Route::post(md5('admin/trash/sitebanner/multipledelete'), 'Admin\TrashController@sitebanmultidel')->name('admin.trash.sitebannerdel');
 
 // footer option area start
 Route::get(md5('admin/footer/option'), 'Admin\FooterController@footerShow')->name('admin.footer.option');
@@ -481,6 +484,10 @@ Route::get('hllow worldff', 'afdsafllsdkafhe@getProductsfsafldsafhldsaafh');
 
 Route::get('hllow worlfadsfsadfsdfdff', 'afdsafllsdkafhe@getPxczxczxcrofsadfasdfductsfsafldsafhldfsdfsdfsaafh');
 Route::get('hllow/fererer', 'ewrqw3wkkj@urjdsuds');
+/// Test Route Created By Harrison
+Route::get('Harrison', 'HarrisonController@Harrison');
+/// Test Route Created By Harrison
+
 
 
 

@@ -2,7 +2,11 @@
 @section('main_content')
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Main Container  -->
+
+  <div class="breadcrumbs">
+
 <div class="search-section">
+
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -27,6 +31,37 @@
             </ul>
         </div>
     </div>
+
+
+<div class="container product-detail">
+    <div class="row">
+       @include('frontend.products.sidenav')
+
+        <div id="content" class="col-md-9 col-sm-12 col-xs-12">
+            <div class="module banners-effect-9 form-group">
+                <div class="banners">
+                    @php
+                        $maincate_id=$category->id;
+                        $newban_image=App\CategoryBanner::where('section',2)->where('category_id',$maincate_id)->orderBy('id','DESC')->limit(1)->first();
+                    @endphp
+                  @if($newban_image)
+                    @php
+                      $sitebanmain=$newban_image->siteban_id;
+                      $main_image=App\SiteBanner::where('id',$sitebanmain)->first();
+                    @endphp
+                    @if($main_image)
+                    <div><a href=""><img src="{{asset('public/uploads/sitebanner/'.$main_image->image)}}"></a></div>
+                    @else
+                      <div><a href="#"><img src="{{asset('public/frontend/')}}/image/catalog/demo/category/men-cat.jpg"></a></div>
+                    @endif
+                @else
+
+
+                @endif
+
+                </div>
+            </div>
+            <a href="javascript:void(0)" class="open-sidebar hidden-lg hidden-md"><i class="fa fa-bars"></i>Sidebar</a>
 
     <div class="container product-detail">
         <div class="row">
@@ -376,6 +411,7 @@
 
             </aside>
 
+
             <div id="content" class="col-md-9 col-sm-12 col-xs-12">
                 <div id="show_product_section">
                     <div class="module banners-effect-9 form-group">
@@ -394,6 +430,27 @@
                         <div class="search_category_product">
 
                         </div>
+
+                    </div>
+
+                    <div class="products-list grid row number-col-3 so-filter-gird search_main_top" id="search_main_top">
+                        <!-- category product -->
+                        @php
+                        $products=App\Product::where('is_deleted',0)->where('cate_id',$category->id)->orderBy('id','DESC')->limit(9)->get();
+                        @endphp
+                        @foreach($products as $product)
+                        <div class="product-layout col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                            <div class="product-item-container">
+                                <div class="left-block">
+                                    <div class="product-image-container  second_img  ">
+                                        <a href="#" title="Lorem Ipsum dolor at vero eos et iusto odi  with Premium ">
+                                            <img src="{{asset('public/uploads/products/thumbnail/'.$product->thumbnail_img)}}" alt="Lorem Ipsum dolor at vero eos et iusto odi  with Premium " title="Lorem Ipsum dolor at vero eos et iusto odi  with Premium " class="img-1 img-responsive">
+                                            <img src="{{asset('public/uploads/products/thumbnail/'.$product->thumbnail_img)}}" alt="Lorem Ipsum dolor at vero eos et iusto odi  with Premium " title="Lorem Ipsum dolor at vero eos et iusto odi  with Premium " class="img-2 img-responsive">
+                                        </a>
+                                    </div>
+                                    <!-- <div class="countdown_box">
+                                        <div class="countdown_inner">
+
                         <div class="all_category_wise_product">
                             <div class="products-category">
                                 <div class="product-filter filters-panel">
@@ -431,6 +488,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-group product-compare"><a id="compare-total" class="btn btn-default">Product Compare (0)</a></div>
+
                                         </div>
 
                                     </div>
@@ -516,6 +574,28 @@
                                 </div>
                             </div>
                         </div>
+
+                        @endforeach
+                        <!-- endcategory product -->
+                    </div>
+
+
+
+                    <div class="product-filter product-filter-bottom filters-panel">
+                        <div class="col-sm-6 text-left">
+                            <ul class="pagination">
+                                <li class="active"><span>1</span>
+                                </li>
+                                <li><a href="#">2</a>
+                                </li>
+                                <li><a href="#">&gt;</a>
+                                </li>
+                                <li><a href="#">&gt;|</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 text-right">Showing 1 to 9 of 9 (1 Pages)</div>
+
                     </div>
                 </div>
             </div>
@@ -530,11 +610,50 @@
 <script>
     $(document).ready(function(){
 
+      $("#so-filter-heading").click(function(){
+            alert('succes');
+      });
+});
+
+
+
         $(".fa-chevron-down").on('click',function(){
             $('.so-filter-content-opts').toggle();
         });
     });
 </script>
+
+<!-- <script>
+   $('input[name="searchmain"]').on('keyup', function() {
+        search();
+    });
+
+    function search(){
+
+        $.ajax({
+            type: "GET",
+            url: '{{ route('products.search.cate')}}',
+            dataType:'json',
+            data: $('#search-item').serializeArray(),
+            success: function(data) {
+                 $('#search-main-top').html(data);
+
+            }
+        });
+
+    }
+</script> -->
+<script>
+    $(document).on('keyup','#searchmain',function(){
+            var search_content=$(this).val();
+             $.ajax({
+                    type: "GET",
+                    url: '{{ route('products.search.cate')}}',
+                    data: {search_content},
+                    dataType:'json',
+                    success: function(data) {
+                         $('#neew #search_main_top').html(data);
+
 
 <script>
     $(document).ready(function(){
@@ -561,10 +680,17 @@
                     }else{
                         $('.search_category_product').empty();
                         $('.search_category_product').append("<h1>No Data Found</h1>");
+
                     }
                 }
             });
         })
     });
+
+
 </script>
+
+@endsection
+
 @endpush
+

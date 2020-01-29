@@ -13,21 +13,24 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="panel_title">
-											<span class="panel_icon"><i class="fas fa-border-all"></i></span><span>All Site-Banner</span>
+											<span class="panel_icon"><i class="fas fa-border-all"></i></span><span>All Deleted Site-Banner</span>
 										</div>
 									</div>
 									<div class="col-md-6 text-right">
-										<div class="panel_title">
-											<a href="#" class="btn btn-success" data-toggle="modal" data-target="#myModal1"><i class="fas fa-plus"></i></span> <span>Add SiteBanner</span></a>
-										</div>
+
 									</div>
 								</div>
 
 							</div>
-							<form action="{{route('admin.sitebanner.multisoftdelete')}}" method="Post">
+							<form action="{{route('admin.trash.sitebannerdel')}}" method="Post">
 						     @csrf
-							<button type="submit" style="margin: 5px;" class="btn btn-danger" ><i class="fa fa-trash"></i> Delete All</button>
-             				<button type="button"  style="margin: 5px;" class="btn btn-success" ><i class="fas fa-recycle"></i> <a href="{{route('admin.trash.sitebanner')}}" style="color: #fff;">Restore</a></button>
+								 <button type="submit" style="margin: 5px;" name="submit" class="btn btn-danger" value="delete" ><i class="fa fa-trash"></i> Delete All</button>
+ 				         <button type="submit" style="margin: 5px;" name="submit" class="btn btn-success" value="restore" ><i class="fas fa-trash-restore-alt"></i> Restore All</button>
+ 				         <button type="button"  style="margin: 5px;" class="btn btn-info" ><i class="fas fa-undo"></i> <a href="{{route('admin.sitebanner.all')}}" style="color: #fff;">Back</a></button>
+
+
+
+
 							<div class="panel_body">
 								<div class="table-responsive">
 		                         <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
@@ -84,14 +87,10 @@
 
 
 		                                       <td>
-		                                       		@if($data->status==1)
-		                                           	<a  href="{{url('admin/sitebanner/deactive/'.$data->id)}}" class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-placement="right" title="active" data-original-title="active"><i class="far fa-thumbs-up"></i></a>
-													@else
-													<a  href="{{url('admin/sitebanner/active/'.$data->id)}}" class="btn btn-default btn-sm text-white" data-toggle="tooltip" data-placement="right" title="active" data-original-title="Deactive"><i class="far fa-thumbs-down"></i></a>
-												    @endif
-		                                           	| <a class="editcat btn btn-sm btn-blue text-white" data-id="{{$data->id}}" title="edit"  data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
 
-		                                            <a id="delete" href="{{url('admin/sitebanner/softdelete/'.$data->id)}}" class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-placement="right" title="Delete" data-original-title="Delete"><i class="far fa-trash-alt"></i></a>
+
+                                                <a  href="{{url('admin/sitebanner/restore/'.$data->id)}}" class="btn btn-info btn-sm text-white"  data-original-title="Delete"><i class="fas fa-recycle"></i></a>
+		                                            <a id="delete" href="{{url('admin/sitebanner/hearddelete/'.$data->id)}}" class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-placement="right" title="Delete" data-original-title="Delete"><i class="far fa-trash-alt"></i></a>
 		                                       </td>
 		                                  </tr>
 		                                  @endforeach
