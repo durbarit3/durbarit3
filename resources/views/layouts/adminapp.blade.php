@@ -404,6 +404,7 @@
                                 <li><a href="{{route('admin.trash.faq')}}">Faq</a></li>
                                 <li><a href="{{route('admin.trash.page')}}">Page</a></li>
                                 <li><a href="{{route('admin.trash.banner')}}">Banner</a></li>
+                                <li><a href="{{route('admin.trash.sitebanner')}}">SiteBanner</a></li>
                               </ul>
                         </li>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\SiteBanner;
+use App\CategoryBanner;
 use Carbon\Carbon;
 use Session;
 use Image;
@@ -22,12 +23,11 @@ class SiteBannerController extends Controller
 	    return view('admin.ecommerce.sitebanner.all',compact('siteban'));
 	}
   public function sitebannerinsert(Request $request){
-  		// return $request;
+  		 //return $request;
         $data = new SiteBanner;
          $data->section = $request->section;
          $data->link = $request->link;
-         $data->category_id = $request->link;
-         $data->category_id = json_encode($request->category_id);
+
          // $data->save();
 
         if($request->section == 1){
@@ -36,7 +36,7 @@ class SiteBannerController extends Controller
                 $ImageName='amni_'.'_'.time().'.'.$image->getClientOriginalExtension();
                 Image::make($image)->resize(570,300)->save('public/uploads/sitebanner/'.$ImageName);
                 $data->image =$ImageName;
-                
+
               }
         }
         if($request->section == 2){
@@ -45,7 +45,7 @@ class SiteBannerController extends Controller
                 $ImageName='cate_top_asif'.'_'.time().'.'.$image->getClientOriginalExtension();
                 Image::make($image)->resize(1120,220)->save('public/uploads/sitebanner/'.$ImageName);
                 $data->image =$ImageName;
-                
+
               }
         }
         if($request->section == 3){
@@ -54,7 +54,7 @@ class SiteBannerController extends Controller
                 $ImageName='catehome_top_asif'.'_'.time().'.'.$image->getClientOriginalExtension();
                 Image::make($image)->resize(270,854)->save('public/uploads/sitebanner/'.$ImageName);
                 $data->image =$ImageName;
-                
+
               }
         }
          if($request->section == 4){
@@ -63,10 +63,38 @@ class SiteBannerController extends Controller
                 $ImageName='header_top_asif'.'_'.time().'.'.$image->getClientOriginalExtension();
                 Image::make($image)->resize(1920,180)->save('public/uploads/sitebanner/'.$ImageName);
                 $data->image =$ImageName;
-                
+
               }
         }
-       
+        if($request->section == 5){
+            if($request->hasFile('pic')){
+               $image=$request->file('pic');
+               $ImageName='details_asif'.'_'.time().'.'.$image->getClientOriginalExtension();
+               Image::make($image)->resize(270,427)->save('public/uploads/sitebanner/'.$ImageName);
+               $data->image =$ImageName;
+
+             }
+       }
+
+        $data->save();
+
+        //
+        if($request->category_id){
+            if(count($request->category_id) > 0){
+                foreach ($request->category_id as $item => $v) {
+                   $data3=array(
+                    'siteban_id'=>$data->id,
+                    'category_id'=>$request->category_id[$item],
+                    'section'=>$data->section,
+                    'created_at'=>Carbon::now()->toDateTimeString(),
+
+                   );
+                   CategoryBanner::Insert($data3);
+                }
+
+            }
+        }
+
         if($data->save()){
          $notification=array(
                 'messege'=>'Site Banner Insert Successfully',
@@ -83,102 +111,100 @@ class SiteBannerController extends Controller
        }
 
 
+    }
 
+//     //deactive
+    public function sitebannerdeactive($id){
+        $deactive=SiteBanner::where('id',$id)->update([
+            'status'=>'0',
+            'updated_at'=>Carbon::now()->toDateTimeString(),
+        ]);
+        if($deactive){
+             $notification=array(
+                'messege'=>'Site Banner Deactive Successfully',
+                'alert-type'=>'success'
+                 );
+               return Redirect()->back()->with($notification);
+           }else{
+             $notification=array(
+                'messege'=>'Site Banner Deactive Faild',
+                'alert-type'=>'error'
+                 );
+               return Redirect()->back()->with($notification);
+           }
+    }
+// active
+ public function sitebanneractive($id){
+        $deactive=SiteBanner::where('id',$id)->update([
+            'status'=>'1',
+            'updated_at'=>Carbon::now()->toDateTimeString(),
+        ]);
+        if($deactive){
+             $notification=array(
+                'messege'=>'Site Banner active Successfully',
+                'alert-type'=>'success'
+                 );
+               return Redirect()->back()->with($notification);
+           }else{
+             $notification=array(
+                'messege'=>'Site Banner active Faild',
+                'alert-type'=>'error'
+                 );
+               return Redirect()->back()->with($notification);
+           }
+    }
+
+//     // soft delete
+    public function sitebabnsoftdelete($id){
+        $delete=SiteBanner::where('id',$id)->update([
+            'is_deleted'=>'1',
+            'updated_at'=>Carbon::now()->toDateTimeString(),
+        ]);
+        if($delete){
+             $notification=array(
+                'messege'=>'Site Banner active Successfully',
+                'alert-type'=>'success'
+                 );
+               return Redirect()->back()->with($notification);
+           }else{
+             $notification=array(
+                'messege'=>'Site Banner active Faild',
+                'alert-type'=>'error'
+                 );
+               return Redirect()->back()->with($notification);
+           }
+    }
+//     //
+    public function sitebanmultisoft(Request $request){
+        $deleteid=$request->Input('delid');
+                     if($deleteid){
+                     $delet=SiteBanner::whereIn('id',$deleteid)->update([
+                            'is_deleted'=>'1',
+                            'updated_at'=>Carbon::now()->toDateTimeString(),
+                     ]);
+                     if($delet){
+                         $notification=array(
+                            'messege'=>'success',
+                            'alert-type'=>'success'
+                             );
+                         return redirect()->back()->with($notification);
+                     }else{
+                         $notification=array(
+                            'messege'=>'error',
+                            'alert-type'=>'error'
+                             );
+                         return redirect()->back()->with($notification);
+                        }
+                     }else{
+                        $notification=array(
+                            'messege'=>'Nothing To Delete',
+                            'alert-type'=>'info'
+                             );
+                         return redirect()->back()->with($notification);
+                     }
 
 
     }
-//     //deactive
-//     public function sitebannerdeactive($id){
-//         $deactive=SiteBanner::where('id',$id)->update([
-//             'status'=>'0',
-//             'updated_at'=>Carbon::now()->toDateTimeString(),
-//         ]);
-//         if($deactive){
-//              $notification=array(
-//                 'messege'=>'Site Banner Deactive Successfully',
-//                 'alert-type'=>'success'
-//                  );
-//                return Redirect()->back()->with($notification);
-//            }else{
-//              $notification=array(
-//                 'messege'=>'Site Banner Deactive Faild',
-//                 'alert-type'=>'error'
-//                  );
-//                return Redirect()->back()->with($notification);
-//            }
-//     } 
-// // active
-//  public function sitebanneractive($id){
-//         $deactive=SiteBanner::where('id',$id)->update([
-//             'status'=>'1',
-//             'updated_at'=>Carbon::now()->toDateTimeString(),
-//         ]);
-//         if($deactive){
-//              $notification=array(
-//                 'messege'=>'Site Banner active Successfully',
-//                 'alert-type'=>'success'
-//                  );
-//                return Redirect()->back()->with($notification);
-//            }else{
-//              $notification=array(
-//                 'messege'=>'Site Banner active Faild',
-//                 'alert-type'=>'error'
-//                  );
-//                return Redirect()->back()->with($notification);
-//            }
-//     } 
-
-//     // soft delete
-//     public function sitebabnsoftdelete($id){
-//         $delete=SiteBanner::where('id',$id)->update([
-//             'is_deleted'=>'1',
-//             'updated_at'=>Carbon::now()->toDateTimeString(),
-//         ]);
-//         if($delete){
-//              $notification=array(
-//                 'messege'=>'Site Banner active Successfully',
-//                 'alert-type'=>'success'
-//                  );
-//                return Redirect()->back()->with($notification);
-//            }else{
-//              $notification=array(
-//                 'messege'=>'Site Banner active Faild',
-//                 'alert-type'=>'error'
-//                  );
-//                return Redirect()->back()->with($notification);
-//            }
-//     }
-//     // 
-//     public function sitebanmultisoft(Request $request){
-//         $deleteid=$request->Input('delid');
-//                      if($deleteid){
-//                      $delet=SiteBanner::whereIn('id',$deleteid)->update([
-//                             'is_deleted'=>'1',
-//                             'updated_at'=>Carbon::now()->toDateTimeString(),
-//                      ]);
-//                      if($delet){
-//                          $notification=array(
-//                             'messege'=>'success',
-//                             'alert-type'=>'success'
-//                              );
-//                          return redirect()->back()->with($notification);
-//                      }else{
-//                          $notification=array(
-//                             'messege'=>'error',
-//                             'alert-type'=>'error'
-//                              );
-//                          return redirect()->back()->with($notification);
-//                         }
-//                      }else{
-//                         $notification=array(
-//                             'messege'=>'Nothing To Delete',
-//                             'alert-type'=>'info'
-//                              );
-//                          return redirect()->back()->with($notification);
-//                      }
-    
-
-//     }
 
 
 //     public function sitebabnsoftedit($id){
@@ -190,7 +216,7 @@ class SiteBannerController extends Controller
 //     public function sitebannerupdate(Request $request){
 //         $id=$request->id;
 //         $old_image=$request->old_image;
-        
+
 //         $update=SiteBanner::where('id',$id)->update([
 //             'section'=>$request['section'],
 //             'link'=>$request['link'],
@@ -205,7 +231,7 @@ class SiteBannerController extends Controller
 //                 SiteBanner::where('id',$id)->update([
 //                             'image'=>$ImageName,
 //                  ]);
-                
+
 //               }
 //         }
 //         if($request->section == 2){
@@ -217,7 +243,7 @@ class SiteBannerController extends Controller
 //                 SiteBanner::where('id',$id)->update([
 //                             'image'=>$ImageName,
 //                  ]);
-                
+
 //               }
 //         }
 //         if($request->section == 3){
@@ -229,7 +255,7 @@ class SiteBannerController extends Controller
 //                  SiteBanner::where('id',$id)->update([
 //                             'image'=>$ImageName,
 //                  ]);
-                
+
 //               }
 //         }
 //           if($request->section == 4){
@@ -241,7 +267,7 @@ class SiteBannerController extends Controller
 //                  SiteBanner::where('id',$id)->update([
 //                         'image'=>$ImageName,
 //                  ]);
-                
+
 //               }
 //         }
 //          if($request->section == 5){
@@ -254,7 +280,7 @@ class SiteBannerController extends Controller
 //                  SiteBanner::where('id',$id)->update([
 //                         'image'=>$ImageName,
 //                  ]);
-                
+
 //               }
 //         }
 //         if($request->section == 6){
@@ -267,7 +293,7 @@ class SiteBannerController extends Controller
 //                  SiteBanner::where('id',$id)->update([
 //                     'image'=>$ImageName,
 //                  ]);
-                
+
 //               }
 //         }
 
@@ -290,61 +316,107 @@ class SiteBannerController extends Controller
 //     }
 //     // restore
 
-//     public function sitebanrestore($id){
+    public function sitebanrestore($id){
 
-//         $deactive=SiteBanner::where('id',$id)->update([
-//             'is_deleted'=>'0',
-//             'updated_at'=>Carbon::now()->toDateTimeString(),
-//         ]);
-//         if($deactive){
-//              $notification=array(
-//                 'messege'=>'Site Banner Restore Successfully',
-//                 'alert-type'=>'success'
-//                  );
-//                return Redirect()->back()->with($notification);
-//            }else{
-//              $notification=array(
-//                 'messege'=>'Site Banner Restore Faild',
-//                 'alert-type'=>'error'
-//                  );
-//                return Redirect()->back()->with($notification);
-//            }
-//     }
+        $deactive=SiteBanner::where('id',$id)->update([
+            'is_deleted'=>'0',
+            'updated_at'=>Carbon::now()->toDateTimeString(),
+        ]);
+        if($deactive){
+             $notification=array(
+                'messege'=>'Site Banner Restore Successfully',
+                'alert-type'=>'success'
+                 );
+               return Redirect()->back()->with($notification);
+           }else{
+             $notification=array(
+                'messege'=>'Site Banner Restore Faild',
+                'alert-type'=>'error'
+                 );
+               return Redirect()->back()->with($notification);
+           }
+    }
 
-//     // heard delete
-//     public function sitebahearddel($id){
-//        $bnimage=SiteBanner::where('id',$id)->first();
-//         $image_old=$bnimage->image;
-//         if($image_old){
-//             unlink('public/uploads/banner/sitebanner/'.$image_old);
-//             $del=SiteBanner::where('id',$id)->delete();
-//             if($del){
-//                 $notification=array(
-//                 'messege'=>'Site Banner Delete Successfully',
-//                 'alert-type'=>'success'
-//                  );
-//                return Redirect()->back()->with($notification);
-//             }else{
-//                 $notification=array(
-//                 'messege'=>'Site Banner Delete Faild',
-//                 'alert-type'=>'error'
-//                  );
-//                return Redirect()->back()->with($notification);
-//             }
-//         }else{
-//             $del=SiteBanner::where('id',$id)->delete();
-//             if($del){
-//                 $notification=array(
-//                 'messege'=>'Site Banner Delete Successfully',
-//                 'alert-type'=>'success'
-//                  );
-//                return Redirect()->back()->with($notification);
-//             }else{
-//                 $notification=array(
-//                 'messege'=>'Site Banner Delete Faild',
-//                 'alert-type'=>'error'
-//                  );
-//                return Redirect()->back()->with($notification);
-//             }
-//         }
+    // heard delete
+    public function sitebahearddel($id){
+      //return $id;
+       $bnimage=SiteBanner::where('id',$id)->first();
+       $cateimage_id=CategoryBanner::where('siteban_id', $bnimage->id)->get();
+       if($cateimage_id){
+          foreach($cateimage_id as $cateban){
+
+            $cateban->delete();
+          }
+          $image_old=$bnimage->image;
+          if ($image_old){
+                unlink('public/uploads/sitebanner/'.$image_old);
+                $del=SiteBanner::where('id',$id)->delete();
+                if($del){
+                  $notification=array(
+                         'messege'=>'Site Banner Delete Successfully',
+                         'alert-type'=>'success'
+                          );
+                        return Redirect()->back()->with($notification);
+                }else{
+                  $notification=array(
+                         'messege'=>'Site Banner Delete Faild',
+                         'alert-type'=>'error'
+                          );
+                        return Redirect()->back()->with($notification);
+                }
+          }else{
+            $del=SiteBanner::where('id',$id)->delete();
+            if($del){
+              $notification=array(
+                     'messege'=>'Site Banner Delete Successfully',
+                     'alert-type'=>'success'
+                      );
+                    return Redirect()->back()->with($notification);
+            }else{
+              $notification=array(
+                     'messege'=>'Site Banner Delete Faild',
+                     'alert-type'=>'error'
+                      );
+                    return Redirect()->back()->with($notification);
+            }
+          }
+
+       }else{
+         $image_old=$bnimage->image;
+         if ($image_old){
+               unlink('public/uploads/sitebanner/'.$image_old);
+               $del=SiteBanner::where('id',$id)->delete();
+               if($del){
+                 $notification=array(
+                        'messege'=>'Site Banner Delete Successfully',
+                        'alert-type'=>'success'
+                         );
+                       return Redirect()->back()->with($notification);
+               }else{
+                 $notification=array(
+                        'messege'=>'Site Banner Delete Faild',
+                        'alert-type'=>'error'
+                         );
+                       return Redirect()->back()->with($notification);
+               }
+         }else{
+           $del=SiteBanner::where('id',$id)->delete();
+           if($del){
+             $notification=array(
+                    'messege'=>'Site Banner Delete Successfully',
+                    'alert-type'=>'success'
+                     );
+                   return Redirect()->back()->with($notification);
+           }else{
+             $notification=array(
+                    'messege'=>'Site Banner Delete Faild',
+                    'alert-type'=>'error'
+                     );
+                   return Redirect()->back()->with($notification);
+           }
+         }
+
+       }
+
+    }
 }
