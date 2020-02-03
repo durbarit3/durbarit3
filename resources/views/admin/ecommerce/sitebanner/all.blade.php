@@ -75,23 +75,24 @@
 		                                      </td>
 
 		                                      <td>
-												@if($data->status==1)
-												<span class="btn btn-success">Active</span>
-												@else
-												<span class="btn btn-danger">Deactive</span>
-												@endif
+																					@if($data->status==1)
+																					<span class="btn btn-success">Active</span>
+																					@else
+																					<span class="btn btn-danger">Deactive</span>
+																					@endif
 		                                      </td>
 
 
 		                                       <td>
 		                                       		@if($data->status==1)
-		                                           	<a  href="{{url('admin/sitebanner/deactive/'.$data->id)}}" class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-placement="right" title="active" data-original-title="active"><i class="far fa-thumbs-up"></i></a>
-													@else
-													<a  href="{{url('admin/sitebanner/active/'.$data->id)}}" class="btn btn-default btn-sm text-white" data-toggle="tooltip" data-placement="right" title="active" data-original-title="Deactive"><i class="far fa-thumbs-down"></i></a>
-												    @endif
-		                                           	| <a class="editcat btn btn-sm btn-blue text-white" data-id="{{$data->id}}" title="edit"  data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
+		                                          <a  href="{{url('admin/sitebanner/deactive/'.$data->id)}}" class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-placement="right" title="active" data-original-title="active"><i class="far fa-thumbs-up"></i></a>
+																							@else
+																							<a href="{{url('admin/sitebanner/active/'.$data->id)}}" class="btn btn-default btn-sm text-white" data-toggle="tooltip" data-placement="right" title="active" data-original-title="Deactive"><i class="far fa-thumbs-down"></i></a>
+																							@endif
+		                                        <!-- | <a class="editcat btn btn-sm btn-blue text-white" data-id="" title="edit"  data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> | -->
+																						<a href="{{url('/get/admin/sitebanner/edit/'.$data->id)}}" class="btn btn-info btn-sm text-white"><i class="fas fa-pencil-alt"></i></a>
 
-		                                            <a id="delete" href="{{url('admin/sitebanner/softdelete/'.$data->id)}}" class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-placement="right" title="Delete" data-original-title="Delete"><i class="far fa-trash-alt"></i></a>
+		                                         <a id="delete" href="{{url('admin/sitebanner/softdelete/'.$data->id)}}" class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-placement="right" title="Delete" data-original-title="Delete"><i class="far fa-trash-alt"></i></a>
 		                                       </td>
 		                                  </tr>
 		                                  @endforeach
@@ -126,11 +127,11 @@
 			    <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Select Image Section</label>
 			    <div class="col-sm-8">
 			      <select class="form-control" name="section">
-			      <option value="1">Site Banner(570*300)</option>
-						<option value="2">Category Top(1170*220)</option>
-						<option value="3">Category Home(270*854)</option>
-						<option value="4">Category HeaderTop(1920*180)</option>
-						<option value="5">Details Banner(270*427)</option>
+				      <option value="1" >Site Banner(570*300)</option>
+							<option value="2">Category Top(1170*220)</option>
+							<option value="3">Category Home(270*854)</option>
+							<option value="4">Category HeaderTop(1920*180)</option>
+							<option value="5">Details Banner(270*427)</option>
 			      </select>
 			    </div>
 			  </div>
@@ -182,89 +183,7 @@
 <!-- edit modal -->
 
 <!-- edit modal start-->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Update Banner</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-           <form class="form-horizontal" action="{{route('admin.sitebanner.update')}}" method="POST" enctype="multipart/form-data" >
-          	@csrf
 
-          	<div class="form-group row">
-			    <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Select Image Section</label>
-			    <div class="col-sm-8">
-			      <select class="form-control" name="section" id="section">
-			      		<option value="1">Site Banner(570*300)</option>
-						<option value="2">Category Top(1170*220)</option>
-						<option value="3">Category Home(270*854)</option>
-						<option value="4">HeaderTop(1920*180)</option>
-			      </select>
-			    </div>
-			  </div>
-
-			  <div class="form-group row catebox" id="catebox">
-			    <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Catgeory</label>
-			    <div class="col-sm-8">
-			      @php
-					$cate=App\Category::where('is_deleted',0)->orderBy('id','DESC')->get();
-			      @endphp
-			      <select class="form-control">
-					@foreach($cate as $category)
-			      	<option value="{{$category->id}}">{{$category->cate_name}}</option>
-			      	@endforeach
-			      </select>
-
-			    </div>
-			  </div>
-
-			  <div class="form-group row">
-			    <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Link</label>
-			    <div class="col-sm-8">
-			      <input type="text" class="form-control" name="link" id="link">
-			      <input type="hidden"  name="id" id="id">
-			    </div>
-			  </div>
-
-			  <div class="form-group row">
-			    <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Image</label>
-			    <div class="col-sm-8">
-
-			      <input type="file" name="pic">
-
-			    </div>
-			  </div>
-			  <div class="form-group row">
-			    <label for="inputEmail3" class="col-sm-3 col-form-label text-right"></label>
-			    <div class="col-sm-8" id="store-img">
-
-			    </div>
-			  </div>
-			  <div class="form-group row">
-			    <label for="inputEmail3" class="col-sm-3 col-form-label text-right"></label>
-			    <div class="col-sm-8" id="old-img">
-
-			    </div>
-			  </div>
-
-
-
-
-
-		    <div class="form-group text-right">
-		    	<!-- <input type="" value="Reset" class="btn btn-warning"> -->
-		    	<button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close</button>
-		    	<button type="submit" class="btn btn-blue">Update</button>
-		    </div>
-		  </form>
-      </div>
-    </div>
-  </div>
-</div>
 
 <script src="{{asset('public/adminpanel')}}/assets/plugins/select2/js/select2.full.min.js"></script>
 <script type="text/javascript">
@@ -324,7 +243,7 @@ $('select[name="section"]').on('change', function(){
       $(document).ready(function() {
          $('.editcat').on('click', function(){
              var id = $(this).data('id');
-             //alert(ban_id);
+             //alert(id);
 
              if(id) {
                  $.ajax({
@@ -335,10 +254,26 @@ $('select[name="section"]').on('change', function(){
 
                             $("#link").val(data.link);
                             $("#id").val(data.id);
-                            $("#section").val(data.section).select;
-                            $("#store-img").html("<img src={{asset('')}}public/uploads/banner/sitebanner/"+data.image+" height='70px' width='70px'/>");
-
+                            $("#store-img").html("<img src={{asset('')}}public/uploads/sitebanner/"+data.image+" height='70px' width='70px'/>");
                             $("#old-img").append("<input type='hidden' name='old_image' value='"+data.image+"' />");
+														if(data.section == 1 ){
+
+															$(".section").append("<option value='1' selected>Site Banner(570*300)</option><option value='2'>Category Top(1170*220)</option><option value='3'>Category Home(270*854)</option><option value='4'>HeaderTop(1920*180)</option><option value='5'>Details Banner(270*427)</option>");
+
+														}else if (data.section == 2 ) {
+																	$(".section").append("<option value='1'>Site Banner(570*300)</option><option value='2' selected>Category Top(1170*220)</option><option value='3'>Category Home(270*854)</option><option value='4'>HeaderTop(1920*180)</option><option value='5'>Details Banner(270*427)</option>");
+														}
+														else if (data.section == 3 ) {
+																	$(".section").append("<option value='1'>Site Banner(570*300)</option><option value='2'>Category Top(1170*220)</option><option value='3' selected>Category Home(270*854)</option><option value='4'>HeaderTop(1920*180)</option><option value='5'>Details Banner(270*427)</option>");
+														}
+														else if (data.section == 4 ) {
+																	$(".section").append("<option value='1'>Site Banner(570*300)</option><option value='2'>Category Top(1170*220)</option><option value='3'>Category Home(270*854)</option><option value='4' selected>HeaderTop(1920*180)</option><option value='5'>Details Banner(270*427)</option>");
+														}
+														else if (data.section == 5 ) {
+																	$(".section").append("<option value='1'>Site Banner(570*300)</option><option value='2'>Category Top(1170*220)</option><option value='3'>Category Home(270*854)</option><option value='4'>HeaderTop(1920*180)</option><option value='5' selected>Details Banner(270*427)</option>");
+														}
+
+
 
 
                         }

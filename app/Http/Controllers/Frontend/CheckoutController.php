@@ -19,6 +19,19 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Cart;
 use Illuminate\Foundation\Console\Presets\React;
+use Srmklive\PayPal\Services\ExpressCheckout;
+use Srmklive\PayPal\Services\AdaptivePayments;
+use PayPal;
+// paypal
+// use PayPal\Api\Payer;
+// use PayPal\Api\Amount;
+// use PayPal\Api\Details;
+// use PayPal\Api\Item;
+// use PayPal\Api\ItemList;
+// use PayPal\Api\Payment;
+// use PayPal\Api\PaymentExecution;
+// use PayPal\Api\RedirectUrls;
+// use PayPal\Api\Transaction;
 
 class CheckoutController extends Controller
 {
@@ -194,7 +207,10 @@ class CheckoutController extends Controller
 
         $purchase_key = DatabaseStorageModel::findOrFail($userid)->delete();
 
+        if($request->payment_method_id == 3){
+          return redirect()->route('payment.paypal');
 
+        }
 
 
         return OrderStorage::where('purchase_key', $purchase_key)->first()->cart_data;
@@ -263,7 +279,6 @@ class CheckoutController extends Controller
         }
     }
 
-
     // Order Place delete
     public function orderDataDelete(Request $request)
     {
@@ -272,4 +287,114 @@ class CheckoutController extends Controller
         $usercartdatas = Cart::session($userid)->getContent();
         return view('frontend.shopping.orderajaxdata', compact('usercartdatas'));
     }
+
+
+
+    public function paywithpaypal(){
+
+
+      // $userid =  \Request::getClientIp(true);
+      // $usercartdatas = Cart::session($userid)->getContent();
+
+
+      $provider = new ExpressCheckout;
+
+      $invoiceId=uniqid();
+      $data=$this->cartData($invoiceId);
+
+      // $data['total'] = $total;
+      $response = $provider->setExpressCheckout($data);
+       //dd($response);
+       // This will redirect user to PayPal
+      return redirect($response['paypal_link']);
+
+    }
+// success
+
+
+public function paymentsuccess(Request $request){
+
+    $provider= new ExpressCheckout;
+    $token=$request->token;
+    $PayerID=$request->PayerID;
+    $response = $provider->getExpressCheckoutDetails($token);
+
+    $invoiceId=$response['INVNUM']??uniqid();
+
+
+    $data=$this->cartData($invoiceId);
+
+    $response = $provider->doExpressCheckoutPayment($data,$token,$PayerID);
+   // dd($response);
+
+    return "order completed";
+
+}
+
+    protected function cartData($invoiceId){
+
+
+        $data = [];
+        $data['items'] = [];
+
+        // $userid =  \Request::getClientIp(true);
+        // $usercartdatas = Cart::session($userid)->getContent();
+        $userid=Auth::user()->id;
+        $usercartdatas=OrderPlace::where('user_id',$userid)->orderBy('id','DESC')->first();
+        $cartid=$usercartdatas->cart_id;
+
+        $orderstorage=OrderStorage::where('purchase_key',$cartid)->first();
+
+        foreach(json_decode($orderstorage->cart_data) as $key => $cart){
+          $itemdetails=[
+            'name'=>$cart->name,
+            'price'=>$cart->price,
+            'qty'=>$cart->quantity,
+          ];
+            $data['items'][]=$itemdetails;
+        }
+
+
+        $data['invoice_id'] = $invoiceId;
+        $data['invoice_description'] = "testinvoice";
+        $data['return_url'] = url('/payment/success');
+        $data['cancel_url'] = url('/text');
+
+          $total = 0;
+          foreach($data['items'] as $item) {
+              $total += $item['price']*$item['qty'];
+          }
+          $data['total']=$total;
+
+          return $data;
+
+    }
+
+public function text(){
+  return "ok";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -208,13 +208,13 @@ Route::get(md5('admin/sitebanner/all'),'Admin\SiteBannerController@sitebanner')-
 Route::get('admin/sitebanner/deactive/{id}','Admin\SiteBannerController@sitebannerdeactive');
 Route::get('admin/sitebanner/active/{id}','Admin\SiteBannerController@sitebanneractive');
 Route::get('admin/sitebanner/softdelete/{id}','Admin\SiteBannerController@sitebabnsoftdelete');
-Route::get('/get/admin/sitebanner/edit/{id}','Admin\BannerController@sitebabnsoftedit');
+Route::get('/get/admin/sitebanner/edit/{id}','Admin\SiteBannerController@sitebabnsoftedit');
 Route::get('admin/sitebanner/restore/{id}','Admin\SiteBannerController@sitebanrestore');
 Route::get('admin/sitebanner/hearddelete/{id}','Admin\SiteBannerController@sitebahearddel');
 
 Route::post(md5('admin/sitebanner/insert'),'Admin\SiteBannerController@sitebannerinsert')->name('admin.sitebanner.insert');
 
-Route::post(md5('admin/sitebanner/update'),'Admin\BannerController@sitebannerupdate')->name('admin.sitebanner.update');
+Route::post(md5('admin/sitebanner/update'),'Admin\SiteBannerController@sitebannerupdate')->name('admin.sitebanner.update');
 Route::post(md5('admin/sitebanner/multisoftdelete'),'Admin\SiteBannerController@sitebanmultisoft')->name('admin.sitebanner.multisoftdelete');
 
 
@@ -368,6 +368,15 @@ Route::get(md5('/checkout/order/data'), 'Frontend\CheckoutController@orderData')
 Route::post(md5('/order/data/update'), 'Frontend\CheckoutController@orderDataUpdate')->name('product.order.update');
 Route::post(md5('/order/data/delete'), 'Frontend\CheckoutController@orderDataDelete')->name('product.order.delete');
 
+// Route::get('/executepayment', 'Frontend\CheckoutController@execute');
+//
+Route::get('/create-payment', 'Frontend\CheckoutController@create')->name('create-payment');
+// Route::get('/cancle', 'Frontend\CheckoutController@cancle');
+
+ Route::get('/pay-with-paypal', 'Frontend\CheckoutController@paywithpaypal')->name('payment.paypal');
+ Route::get('/payment/success', 'Frontend\CheckoutController@paymentsuccess');
+ Route::get('/text', 'Frontend\CheckoutController@text');
+
 
 // cart all product show
 
@@ -400,8 +409,10 @@ Route::get('search/product/by/re_sub/category/{categoryId}/{productName}', 'Fron
 
 // Search Route Created By Harrison Ended
 
+// order Controller
 
-
+Route::get(md5('admin/product/order'), 'Admin\OrderController@index')->name('admin.productorder');
+Route::get('admin/product/order/invoice/{id}', 'Admin\OrderController@invoice');
 
 // cupon
 Route::get(md5('admin/trash/cupon'), 'Admin\TrashController@cupon')->name('admin.trash.cupon');
@@ -487,10 +498,3 @@ Route::get('hllow/fererer', 'ewrqw3wkkj@urjdsuds');
 /// Test Route Created By Harrison
 Route::get('Harrison', 'HarrisonController@Harrison');
 /// Test Route Created By Harrison
-
-
-
-
-
-
-

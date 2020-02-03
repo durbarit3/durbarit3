@@ -833,13 +833,6 @@
                                         @if($productdetails->product_type==1)
                                         <!--variation start-->
 
-
-
-
-
-
-
-
                                         <div class="col-md-12">
                                             <div id="product">
                                                 <div class="form-group required "
@@ -848,9 +841,6 @@
                                                     <input type="hidden" name="id" value="{{$productdetails->id}}">
                                                     @if (count(json_decode($productdetails->colors)) > 0)
                                                     @foreach (json_decode($productdetails->colors) as $key => $color)
-
-
-
                                                     <div class="radio  radio-type-button">
                                                         <label>
                                                             <input type="radio"
@@ -865,8 +855,6 @@
                                                             </span>
                                                         </label>
                                                     </div>
-
-
                                                     @endforeach
                                                     @endif
                                                 </div>

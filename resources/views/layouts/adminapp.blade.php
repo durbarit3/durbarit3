@@ -329,7 +329,7 @@
                         <li class="single-nav-wrapper">
                             <a class="has-arrow menu-item" href="#" aria-expanded="false">
                               <span class="left-icon"><i class="fas fa-cart-plus"></i></span>
-                                <span class="menu-text">Product</span>
+                                <span class="menu-text">E-commerce Product</span>
                             </a>
                               <ul class="dashboard-menu">
                                 <li><a href="{{route('admin.product.producttype')}}">Add Product</a></li>
@@ -344,6 +344,17 @@
                               <ul class="dashboard-menu">
                                 <li><a href="{{route('admin.cupon.all')}}">All Cupon</a></li>
                                 <li><a href="{{route('admin.cupon.add')}}">Add Cupon</a></li>
+                              </ul>
+                        </li>
+
+                        <li class="single-nav-wrapper">
+                            <a class="has-arrow menu-item" href="#" aria-expanded="false">
+                              <span class="left-icon"><i class="fas fa-people-carry"></i></span>
+                                <span class="menu-text">E-commerce Order</span>
+                            </a>
+                              <ul class="dashboard-menu">
+                                <li><a href="{{route('admin.productorder')}}">All Orders</a></li>
+                                <li><a href="{{url('admin/product/order/invoice')}}">invoice</a></li>
                               </ul>
                         </li>
 
@@ -484,6 +495,8 @@
         <script src="{{asset('public/adminpanel')}}/assets/plugins/ckeditor/ckeditor.js"></script>
         <script src="{{asset('public/adminpanel')}}/assets/plugins/ckeditor/ckeditor-active.js"></script>
         <script src="{{asset('public/adminpanel')}}/assets/plugins/select2/js/select2.full.min.js"></script>
+        <script src="{{asset('public/adminpanel')}}/assets/plugins/print/divjs.js"></script>
+		   <script src="{{asset('public/adminpanel')}}/assets/plugins/print/print.active.js"></script>
 
         {{-- TestJs --}}
 

@@ -27,6 +27,7 @@ class SiteBannerController extends Controller
         $data = new SiteBanner;
          $data->section = $request->section;
          $data->link = $request->link;
+         $data->category_id = json_encode($request->category_id);
 
          // $data->save();
 
@@ -207,113 +208,120 @@ class SiteBannerController extends Controller
     }
 
 
-//     public function sitebabnsoftedit($id){
-//         $data=SiteBanner::where('id',$id)->first();
-//         return json_encode($data);
-//     }
+    public function sitebabnsoftedit($id){
+        $data=SiteBanner::where('id',$id)->first();
+        return view('admin.ecommerce.sitebanner.edit',compact('data'));
+        // return json_encode($data);
+    }
 
 //     // update
-//     public function sitebannerupdate(Request $request){
-//         $id=$request->id;
-//         $old_image=$request->old_image;
+    public function sitebannerupdate(Request $request){
 
-//         $update=SiteBanner::where('id',$id)->update([
-//             'section'=>$request['section'],
-//             'link'=>$request['link'],
-//         ]);
+    //  return $request;
+        $id=$request->id;
+        $old_image=$request->old_image;
 
-//         if($request->section == 1){
-//              if($request->hasFile('pic')){
-//                 unlink('public/uploads/banner/sitebanner/'. $old_image);
-//                 $image=$request->file('pic');
-//                 $ImageName='th'.'_'.time().'.'.$image->getClientOriginalExtension();
-//                 Image::make($image)->resize(435,175)->save('public/uploads/banner/sitebanner/'.$ImageName);
-//                 SiteBanner::where('id',$id)->update([
-//                             'image'=>$ImageName,
-//                  ]);
+        $update=SiteBanner::where('id',$id)->update([
+            'section'=>$request['section'],
+            'link'=>$request['link'],
+            'category_id'=>json_encode($request['category_id']),
+        ]);
+        //
+        if($request->section == 1){
+             if($request->hasFile('pic')){
+                unlink('public/uploads/sitebanner/'. $old_image);
+                $image=$request->file('pic');
+                $ImageName='th'.'_'.time().'.'.$image->getClientOriginalExtension();
+                Image::make($image)->resize(435,175)->save('public/uploads/banner/sitebanner/'.$ImageName);
+                SiteBanner::where('id',$id)->update([
+                      'image'=>$ImageName,
+                 ]);
 
-//               }
-//         }
-//         if($request->section == 2){
-//              if($request->hasFile('pic')){
-//                 unlink('public/uploads/banner/sitebanner/'. $old_image);
-//                 $image=$request->file('pic');
-//                 $ImageName='th'.'_'.time().'.'.$image->getClientOriginalExtension();
-//                 Image::make($image)->resize(570,300)->save('public/uploads/banner/sitebanner/'.$ImageName);
-//                 SiteBanner::where('id',$id)->update([
-//                             'image'=>$ImageName,
-//                  ]);
+              }
+        }
+        if($request->section == 2){
+             if($request->hasFile('pic')){
+                unlink('public/uploads/sitebanner/'. $old_image);
+                $image=$request->file('pic');
+                $ImageName='th'.'_'.time().'.'.$image->getClientOriginalExtension();
+                Image::make($image)->resize(570,300)->save('public/uploads/banner/sitebanner/'.$ImageName);
+                SiteBanner::where('id',$id)->update([
+                            'image'=>$ImageName,
+                 ]);
 
-//               }
-//         }
-//         if($request->section == 3){
-//              if($request->hasFile('pic')){
-//                  unlink('public/uploads/banner/sitebanner/'. $old_image);
-//                 $image=$request->file('pic');
-//                 $ImageName='th'.'_'.time().'.'.$image->getClientOriginalExtension();
-//                 Image::make($image)->resize(270,854)->save('public/uploads/banner/sitebanner/'.$ImageName);
-//                  SiteBanner::where('id',$id)->update([
-//                             'image'=>$ImageName,
-//                  ]);
+              }
+        }
+        if($request->section == 3){
+             if($request->hasFile('pic')){
+                 unlink('public/uploads/sitebanner/'. $old_image);
+                $image=$request->file('pic');
+                $ImageName='th'.'_'.time().'.'.$image->getClientOriginalExtension();
+                Image::make($image)->resize(270,854)->save('public/uploads/banner/sitebanner/'.$ImageName);
+                 SiteBanner::where('id',$id)->update([
+                            'image'=>$ImageName,
+                 ]);
 
-//               }
-//         }
-//           if($request->section == 4){
-//              if($request->hasFile('pic')){
-//                  unlink('public/uploads/banner/sitebanner/'. $old_image);
-//                 $image=$request->file('pic');
-//                 $ImageName='th'.'_'.time().'.'.$image->getClientOriginalExtension();
-//                 Image::make($image)->resize(270,427)->save('public/uploads/banner/sitebanner/'.$ImageName);
-//                  SiteBanner::where('id',$id)->update([
-//                         'image'=>$ImageName,
-//                  ]);
+              }
+        }
+          if($request->section == 4){
+             if($request->hasFile('pic')){
+                 unlink('public/uploads/sitebanner/'. $old_image);
+                $image=$request->file('pic');
+                $ImageName='th'.'_'.time().'.'.$image->getClientOriginalExtension();
+                Image::make($image)->resize(270,427)->save('public/uploads/banner/sitebanner/'.$ImageName);
+                 SiteBanner::where('id',$id)->update([
+                        'image'=>$ImageName,
+                 ]);
 
-//               }
-//         }
-//          if($request->section == 5){
-//              if($request->hasFile('pic')){
+              }
+        }
+         if($request->section == 5){
+             if($request->hasFile('pic')){
 
-//                 unlink('public/uploads/banner/sitebanner/'. $old_image);
-//                 $image=$request->file('pic');
-//                 $ImageName='th'.'_'.time().'.'.$image->getClientOriginalExtension();
-//                 Image::make($image)->resize(362,495)->save('public/uploads/banner/sitebanner/'.$ImageName);
-//                  SiteBanner::where('id',$id)->update([
-//                         'image'=>$ImageName,
-//                  ]);
+                unlink('public/uploads/sitebanner/'. $old_image);
+                $image=$request->file('pic');
+                $ImageName='th'.'_'.time().'.'.$image->getClientOriginalExtension();
+                Image::make($image)->resize(362,495)->save('public/uploads/banner/sitebanner/'.$ImageName);
+                 SiteBanner::where('id',$id)->update([
+                        'image'=>$ImageName,
+                 ]);
 
-//               }
-//         }
-//         if($request->section == 6){
-//              if($request->hasFile('pic')){
+              }
+        }
 
-//                 unlink('public/uploads/banner/sitebanner/'. $old_image);
-//                 $image=$request->file('pic');
-//                 $ImageName='th'.'_'.time().'.'.$image->getClientOriginalExtension();
-//                 Image::make($image)->resize(1920,180)->save('public/uploads/banner/sitebanner/'.$ImageName);
-//                  SiteBanner::where('id',$id)->update([
-//                     'image'=>$ImageName,
-//                  ]);
+      if($request->category_id){
+        $cate_img=CategoryBanner::where('siteban_id',$id)->delete();
+        if(count($request->category_id) > 0){
+          foreach ($request->category_id as $item => $v) {
+             $data3=array(
+              'siteban_id'=>$id,
+              'category_id'=>$request->category_id[$item],
+              'section'=>$request->section,
+              'created_at'=>Carbon::now()->toDateTimeString(),
 
-//               }
-//         }
+             );
+             CategoryBanner::Insert($data3);
+          }
 
+        }
 
-//         if($update){
-//              $notification=array(
-//             'messege'=>'success',
-//             'alert-type'=>'success'
-//              );
-//          return redirect()->back()->with($notification);
-//         }
-//         else{
-//             $notification=array(
-//                 'messege'=>'Faild',
-//                 'alert-type'=>'error'
-//                  );
-//              return redirect()->back()->with($notification);
-//         }
+      }
+        if($update){
+             $notification=array(
+            'messege'=>'success',
+            'alert-type'=>'success'
+             );
+         return redirect()->back()->with($notification);
+        }
+        else{
+            $notification=array(
+                'messege'=>'Faild',
+                'alert-type'=>'error'
+                 );
+             return redirect()->back()->with($notification);
+        }
 
-//     }
+    }
 //     // restore
 
     public function sitebanrestore($id){
