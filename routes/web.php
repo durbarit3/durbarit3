@@ -412,6 +412,7 @@ Route::get('search/product/by/re_sub/category/{categoryId}/{productName}', 'Fron
 // order Controller
 
 Route::get(md5('admin/product/order'), 'Admin\OrderController@index')->name('admin.productorder');
+Route::get(md5('admin/product/ondelevery'), 'Admin\OrderController@ondelevery')->name('admin.ondevelery');
 Route::get('admin/product/order/invoice/{id}', 'Admin\OrderController@invoice');
 
 // cupon

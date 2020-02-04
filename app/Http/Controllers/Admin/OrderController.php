@@ -16,8 +16,14 @@ class OrderController extends Controller
   }
 
   public function index(){
-    $allorder=OrderPlace::orderBy('id','DESC')->get();
+    $allorder=OrderPlace::orderBy('id','DESC')->where('delevary',1)->get();
     return view('admin.ecommerce.order.all',compact('allorder'));
+  }
+
+  public function ondelevery(){
+    $ondevelery=OrderPlace::orderBy('id','DESC')->where('delevary',4)->get();
+    return view('admin.ecommerce.order.ondelevery',compact('ondevelery'));
+
   }
 
   public function invoice($id){

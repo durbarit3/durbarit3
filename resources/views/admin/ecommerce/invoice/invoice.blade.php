@@ -9,15 +9,40 @@
         <div class="panel mb-0">
           <div class="panel_header">
             <div class="panel_title">
-              <span>Invoice</span>
+              <div class="row">
+                <div class="col-md-6">
+                  <span>Invoice</span>
+                </div>
+                <div class="col-md-6 text-right">
+                  <a href="#" class="btn btn-info">Back</a>
+                </div>
+            </div>
             </div>
           </div>
+        </br>
+          <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+              <select class="form-control">
+                <option>Panding</option>
+                <option>On Review</option>
+                <option>On Delevery</option>
+                <option>Develared</option>
+
+              </select>
+
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-success">Develary Status</button>
+            </div>
+          </div>
+        </br>
           <div class="panel_body print_element">
 
                           <div class="logo">
                             <img src="{{asset('public/adminpanel')}}/assets/images/logo.png" class="img-fluid" alt="">
                           </div>
-             <div class="row">
+                           <div class="row">
                               <div class="col-sm-6">
                                   <br>
                                   <address class="fs-13">

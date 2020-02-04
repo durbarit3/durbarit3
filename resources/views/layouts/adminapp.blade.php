@@ -353,7 +353,9 @@
                                 <span class="menu-text">E-commerce Order</span>
                             </a>
                               <ul class="dashboard-menu">
-                                <li><a href="{{route('admin.productorder')}}">All Orders</a></li>
+                                <li><a href="{{route('admin.productorder')}}">All Pending Orders</a></li>
+                                <li><a href="{{route('admin.ondevelery')}}">All On Delevery Orders</a></li>
+                                <li><a href="">All Compleate Orders</a></li>
                                 <li><a href="{{url('admin/product/order/invoice')}}">invoice</a></li>
                               </ul>
                         </li>
