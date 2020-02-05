@@ -494,3 +494,8 @@ Route::group(['prefix' => 'admin/courier', 'namespace' => 'Admin', 'middleware' 
     // Ajax Route Ended
 });
 //Harrison start ended
+
+
+// asif
+Route::get('hassokor', 'Frontend\CompareProductController@nae');
+// asif end
