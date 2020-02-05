@@ -349,7 +349,7 @@
 
                         <li class="single-nav-wrapper">
                           @php
-                            $pending=App\OrderPlace::where('delevary',1)->count();
+                            $pending=App\OrderPlace::where('delevary',1)->where('is_deleted',0)->count();
                           @endphp
                             <a class="has-arrow menu-item" href="#" aria-expanded="false">
                               <span class="left-icon"><i class="fas fa-people-carry"></i></span>
@@ -358,15 +358,25 @@
                               <ul class="dashboard-menu">
                                 <li><a href="{{route('admin.productorder')}}">All Pending Orders <span class="badge badge-light">{{$pending}}</span></a></li>
                                 @php
-                                  $ondevelery=App\OrderPlace::where('delevary',2)->count();
+                                  $ondevelery=App\OrderPlace::where('delevary',2)->where('is_deleted',0)->count();
                                 @endphp
                                 <li><a href="{{route('admin.ondevelery')}}">On Delevery Orders <span class="badge badge-light">{{$ondevelery}}</span></a></li>
                                 @php
-                                  $complate=App\OrderPlace::where('delevary',3)->count();
+                                  $complate=App\OrderPlace::where('delevary',3)->where('is_deleted',0)->count();
                                 @endphp
                                 <li><a href="{{route('admin.complateorder')}}">All Compleate Orders <span class="badge badge-light">{{$complate}}</span></a></li>
                                 <li><a href="{{url('admin/product/order/invoice')}}">invoice</a></li>
                               </ul>
+                        </li>
+
+                        <li class="single-nav-wrapper">
+                            <a class="has-arrow menu-item" href="#" aria-expanded="false">
+                              <span class="left-icon"><i class="fas fa-people-carry"></i></span>
+                                <span class="menu-text">Reports</span>
+                            </a>
+                            <ul class="dashboard-menu">
+                                <li><a href="{{ route('admin.product.stock') }}">Product Stock</a></li>
+                            </ul>
                         </li>
 
                         <li class="single-nav-wrapper">
@@ -438,6 +448,7 @@
                                 <li><a href="{{route('admin.trash.page')}}">Page</a></li>
                                 <li><a href="{{route('admin.trash.banner')}}">slider</a></li>
                                 <li><a href="{{route('admin.trash.sitebanner')}}">SiteBanner</a></li>
+                                <li><a href="{{route('admin.trash.allorder')}}">All Deleted Order</a></li>
                               </ul>
                         </li>
 

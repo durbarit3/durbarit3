@@ -114,8 +114,6 @@ class CheckoutController extends Controller
                     foreach ($cartdatas as $cartdata) {
                         foreach (json_decode($cuponminproducts) as $cuponminproduct) {
 
-
-
                             if ($cartdata->attributes->product_id == $cuponminproduct) {
                                 UserUsedCupon::insert([
                                     'user_ip' => Auth::user()->id,
@@ -332,7 +330,6 @@ public function paymentsuccess(Request $request){
 }
 
     protected function cartData($invoiceId){
-
 
         $data = [];
         $data['items'] = [];
