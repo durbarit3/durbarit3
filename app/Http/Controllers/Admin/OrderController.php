@@ -21,8 +21,13 @@ class OrderController extends Controller
   }
 
   public function ondelevery(){
-    $ondevelery=OrderPlace::orderBy('id','DESC')->where('delevary',4)->get();
+    $ondevelery=OrderPlace::orderBy('id','DESC')->where('delevary',2)->get();
     return view('admin.ecommerce.order.ondelevery',compact('ondevelery'));
+
+  }
+  public function complateorder(){
+    $complate=OrderPlace::orderBy('id','DESC')->where('delevary',3)->get();
+    return view('admin.ecommerce.order.complateorder',compact('complate'));
 
   }
 
@@ -30,4 +35,34 @@ class OrderController extends Controller
     $invoice=OrderPlace::where('id',$id)->first();
     return view('admin.ecommerce.invoice.invoice',compact('invoice'));
   }
+  public function deleverystatus(Request $request){
+    $id=$request->orderplaceid;
+    $devestatus=$request->delevary;
+    //return $devestatus;
+    $update=OrderPlace::where('id',$id)->update([
+      'delevary'=>$devestatus,
+      'updated_at'=>Carbon::now()->toDateTimeString(),
+    ]);
+    if($update){
+      $notification=array(
+        'messege'=>'Update Success',
+        'alert-type'=>'success'
+         );
+       return Redirect()->back()->with($notification);
+    }else{
+      $notification=array(
+        'messege'=>'Update faild',
+        'alert-type'=>'error'
+         );
+       return Redirect()->back()->with($notification);
+    }
+
+
+
+
+  }
+
+
+
+
 }

@@ -70,7 +70,7 @@
 											<img src=" {{asset('public/frontend')}}/image/catalog/demo/product/travel/2.jpg" title="Canada Travel One or Two European Facials at Studio" alt="Canada Travel One or Two European Facials at Studio">
 										</a>
 									</div>
-								
+
 								</div>
 							</div>
 							<div class="content-product-right col-sm-7">
@@ -149,7 +149,7 @@
 												</label>
 											</div>
 											@endforeach
-											
+
 										</div>
 									</div>
 									@endforeach
@@ -215,8 +215,8 @@
 		<script type="text/javascript" src="{{asset('public/frontend')}}/js/themejs/custom_h1.js"></script>
 		<script type="text/javascript" src="{{asset('public/frontend')}}/js/themejs/addtocart.js"></script>
 		<script>
-			
-			
+
+
 		</script>
 	</body>
 </html>

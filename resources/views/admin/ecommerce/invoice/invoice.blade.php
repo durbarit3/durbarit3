@@ -20,22 +20,25 @@
             </div>
           </div>
         </br>
+        <form action="{{url('admin/delevary/status')}}" method="POST">
+          @csrf
           <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-4">
-              <select class="form-control">
-                <option>Panding</option>
-                <option>On Review</option>
-                <option>On Delevery</option>
-                <option>Develared</option>
+              <input type="hidden" name="orderplaceid" value="{{$invoice->id}}">
+              <select class="form-control" name="delevary">
 
+                <option value="1" @if($invoice->delevary==1) selected @else @endif>Panding</option>
+                <option value="2" @if($invoice->delevary==2) selected @else @endif>On Delevery</option>
+                <option value="3" @if($invoice->delevary==3) selected @else @endif>Develared</option>
               </select>
 
             </div>
             <div class="col-md-2">
-              <button class="btn btn-success">Develary Status</button>
+              <button type="submit" class="btn btn-success">Develary Status</button>
             </div>
           </div>
+        </form>
         </br>
           <div class="panel_body print_element">
 

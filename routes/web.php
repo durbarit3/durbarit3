@@ -204,16 +204,13 @@ Route::post('admin/banner/update','Admin\BannerController@update')->name('admin.
 
 // site banner
 Route::get(md5('admin/sitebanner/all'),'Admin\SiteBannerController@sitebanner')->name('admin.sitebanner.all');
-
 Route::get('admin/sitebanner/deactive/{id}','Admin\SiteBannerController@sitebannerdeactive');
 Route::get('admin/sitebanner/active/{id}','Admin\SiteBannerController@sitebanneractive');
 Route::get('admin/sitebanner/softdelete/{id}','Admin\SiteBannerController@sitebabnsoftdelete');
 Route::get('/get/admin/sitebanner/edit/{id}','Admin\SiteBannerController@sitebabnsoftedit');
 Route::get('admin/sitebanner/restore/{id}','Admin\SiteBannerController@sitebanrestore');
 Route::get('admin/sitebanner/hearddelete/{id}','Admin\SiteBannerController@sitebahearddel');
-
 Route::post(md5('admin/sitebanner/insert'),'Admin\SiteBannerController@sitebannerinsert')->name('admin.sitebanner.insert');
-
 Route::post(md5('admin/sitebanner/update'),'Admin\SiteBannerController@sitebannerupdate')->name('admin.sitebanner.update');
 Route::post(md5('admin/sitebanner/multisoftdelete'),'Admin\SiteBannerController@sitebanmultisoft')->name('admin.sitebanner.multisoftdelete');
 
@@ -413,6 +410,8 @@ Route::get('search/product/by/re_sub/category/{categoryId}/{productName}', 'Fron
 
 Route::get(md5('admin/product/order'), 'Admin\OrderController@index')->name('admin.productorder');
 Route::get(md5('admin/product/ondelevery'), 'Admin\OrderController@ondelevery')->name('admin.ondevelery');
+Route::get(md5('admin/product/complateorder'), 'Admin\OrderController@complateorder')->name('admin.complateorder');
+Route::post('admin/delevary/status', 'Admin\OrderController@deleverystatus');
 Route::get('admin/product/order/invoice/{id}', 'Admin\OrderController@invoice');
 
 // cupon

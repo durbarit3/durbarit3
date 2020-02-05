@@ -50,7 +50,7 @@
 		                                  </tr>
 		                              </thead>
 		                              <tbody>
-                                      @foreach($ondevelery as $key => $data)
+                                      @foreach($complate as $key => $data)
 		                                  <tr>
 	                                  		  <td>
                     												<label class="chech_container mb-4">
@@ -128,6 +128,7 @@
             $(".checkbox").prop('checked', true);
 
          } else {
+
             $(".checkbox").prop('checked',false);
 
          }

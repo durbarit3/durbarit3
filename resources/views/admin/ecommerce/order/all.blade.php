@@ -65,9 +65,11 @@
 		                                      <td>{{$data->user_id}}</td>
 		                                      <td>
                                             @if($data->delevary==1)
-	                                           <span class="btn btn-info">Pending</span>
-                                            @else
-	                                           <span class="btn btn-success">Delevered</span>
+	                                           <span class="btn btn-danger">Pending</span>
+                                            @elseif($data->delevary==2)
+	                                           <span class="btn btn-info">On Delevery</span>
+																						 @elseif($data->delevary==3)
+																						  <span class="btn btn-success">Delevered</span>
                                             @endif
                                           </td>
 		                                      <td>
@@ -82,8 +84,11 @@
                                           </td>
 
 		                                      <td>
+																						@if($data->payment_status==1)
 																					    <span class="btn btn-info">unpaid</span>
+																						@else
 																					    <span class="btn btn-success">paid</span>
+																						@endif
 		                                      </td>
                                           <td>
                                               <label class="switch">
